@@ -18,17 +18,30 @@ public class UserConfig {
   @Id
   private String id;
   private String userId;
-  private String salt;
+
+  // to login
+  private String passwordSalt;
+
+  // to encryption
+  private String encryptionSalt;
+
   private int iterations;
   private String kdf;
   private LocalDateTime createAt;
   private LocalDateTime updatedAt;
 
   // mongo takes care of inserting the id
-  public UserConfig(String userId, String salt, int iterations,
-      String kdf, LocalDateTime createAt, LocalDateTime updatedAt) {
+  public UserConfig(
+      String userId,
+      String passwordSalt,
+      String encryptionSalt,
+      int iterations,
+      String kdf,
+      LocalDateTime createAt,
+      LocalDateTime updatedAt) {
     this.userId = userId;
-    this.salt = salt;
+    this.passwordSalt = passwordSalt;
+    this.encryptionSalt = encryptionSalt;
     this.iterations = iterations;
     this.kdf = kdf;
     this.createAt = createAt;

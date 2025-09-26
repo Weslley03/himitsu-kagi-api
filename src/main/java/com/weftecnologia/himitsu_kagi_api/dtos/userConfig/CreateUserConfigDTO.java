@@ -9,7 +9,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public class CreateUserConfigDTO {
   private String userId;
-  private String salt;
+  private String passwordSalt;
+  private String encryptionSalt;
   private int iterations;
   private String kdf;
   private LocalDateTime createAt;

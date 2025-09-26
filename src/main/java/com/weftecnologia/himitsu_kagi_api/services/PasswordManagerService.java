@@ -29,15 +29,16 @@ public class PasswordManagerService {
 
   public static PasswordHashResult hashPassword(String password, int interations) {
     try {
-      // generate random salt
-      SecureRandom random = new SecureRandom();
-      byte[] salt = new byte[SALT_LENGTH];
-      random.nextBytes(salt);
+      // generate password random salt
+      byte[] passwordSalt = generateSalt();
+
+      // generate encryptionSalt random salt
+      byte[] encryptionSalt = generateSalt();
 
       // generate PBKDF2 hash
       PBEKeySpec spec = new PBEKeySpec(
           password.toCharArray(),
-          salt,
+          passwordSalt,
           interations,
           KEY_LENGTH * 8); // bytes
 
@@ -45,10 +46,11 @@ public class PasswordManagerService {
       byte[] hash = factory.generateSecret(spec).getEncoded();
 
       // convert to base64
-      String saltBase64 = Base64.getEncoder().encodeToString(salt);
+      String passwordSaltBase64 = Base64.getEncoder().encodeToString(passwordSalt);
+      String encryptionSaltBase64 = Base64.getEncoder().encodeToString(encryptionSalt);
       String hashBase64 = Base64.getEncoder().encodeToString(hash);
 
-      return new PasswordHashResult(hashBase64, saltBase64, interations, DEFAULT_KDF);
+      return new PasswordHashResult(hashBase64, passwordSaltBase64, encryptionSaltBase64, interations, DEFAULT_KDF);
     } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
       throw new RuntimeException("error generating password hash", e);
     }
@@ -75,12 +77,20 @@ public class PasswordManagerService {
     }
   }
 
+  private static byte[] generateSalt() {
+    SecureRandom random = new SecureRandom();
+    byte[] salt = new byte[16];
+    random.nextBytes(salt);
+    return salt;
+  }
+
   // class to encapsulate all result
   @Getter
   @AllArgsConstructor
   public static class PasswordHashResult {
     private final String hash;
-    private final String salt;
+    private final String passwordSalt;
+    private final String encryptionSalt;
     private final int iterations;
     private final String kdf;
   }

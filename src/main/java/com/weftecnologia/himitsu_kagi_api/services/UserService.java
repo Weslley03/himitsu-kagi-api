@@ -30,7 +30,10 @@ public class UserService {
       throw new UserAlreadyExistsException(dto.getEmail());
     }
 
-    // String hash, String salt, int iterations, String kdf
+    /*
+     * String hash, String passwordSalt, String encryptoSalt, int iterations,
+     * String, kdf
+     */
     PasswordManagerService.PasswordHashResult hashResult = PasswordManagerService.hashPassword(dto.getPassword());
     InsertUserDTO insertUserDTO = new InsertUserDTO(
         dto.getName(),
@@ -44,7 +47,8 @@ public class UserService {
     // create user configurations
     CreateUserConfigDTO createUserConfigDTO = new CreateUserConfigDTO(
         userDto.getId(),
-        hashResult.getSalt(),
+        hashResult.getPasswordSalt(),
+        hashResult.getEncryptionSalt(),
         hashResult.getIterations(),
         hashResult.getKdf(),
         LocalDateTime.now(),

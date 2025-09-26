@@ -10,7 +10,8 @@ import lombok.Getter;
 public class UserConfigDTO {
   private String id;
   private String userId;
-  private String salt;
+  private String passwordSalt;
+  private String encryptionSalt;
   private int iterations;
   private String kdf;
   private LocalDateTime createAt;

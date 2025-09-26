@@ -23,7 +23,8 @@ public class UserConfigRepository {
     try {
       UserConfig entity = new UserConfig(
           dto.getUserId(),
-          dto.getSalt(),
+          dto.getPasswordSalt(),
+          dto.getEncryptionSalt(),
           dto.getIterations(),
           dto.getKdf(),
           dto.getCreateAt(),
@@ -33,7 +34,8 @@ public class UserConfigRepository {
       return new UserConfigDTO(
           userConfig.getId(),
           userConfig.getUserId(),
-          userConfig.getSalt(),
+          userConfig.getPasswordSalt(),
+          userConfig.getEncryptionSalt(),
           userConfig.getIterations(),
           userConfig.getKdf(),
           userConfig.getCreateAt(),
