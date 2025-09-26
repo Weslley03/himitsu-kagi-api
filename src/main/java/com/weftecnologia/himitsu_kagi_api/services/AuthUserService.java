@@ -40,7 +40,7 @@ public class AuthUserService {
     boolean correctPassword = PasswordManagerService.verifyPassword(
         dto.getPassword(),
         storedPasswordHash,
-        userConfig.getSalt(),
+        userConfig.getPasswordSalt(),
         userConfig.getIterations());
 
     if (correctPassword == false) {
