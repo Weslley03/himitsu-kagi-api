@@ -12,15 +12,19 @@ import com.weftecnologia.himitsu_kagi_api.entities.User;
 import com.weftecnologia.himitsu_kagi_api.exceptions.customExceptions.UserAlreadyExistsException;
 import com.weftecnologia.himitsu_kagi_api.repositories.UserConfigRepository;
 import com.weftecnologia.himitsu_kagi_api.repositories.UserRepository;
+import com.weftecnologia.himitsu_kagi_api.repositories.UserVaultRepository;
 
 @Service
 public class UserService {
   private final UserRepository userRepository;
   private final UserConfigRepository userConfigRepository;
+  private final UserVaultRepository userVaultRepository;
 
-  public UserService(UserRepository userRepository, UserConfigRepository userConfigRepository) {
+  public UserService(UserRepository userRepository, UserConfigRepository userConfigRepository,
+      UserVaultRepository userVaultRepository) {
     this.userRepository = userRepository;
     this.userConfigRepository = userConfigRepository;
+    this.userVaultRepository = userVaultRepository;
   };
 
   public UserDTO registerUser(RegisterUserDTO dto) {
@@ -55,6 +59,9 @@ public class UserService {
         LocalDateTime.now());
 
     userConfigRepository.insertUserConfig(createUserConfigDTO);
+
+    userVaultRepository.createUserVault(userDto.getId());
+
     return userDto;
   }
 }
