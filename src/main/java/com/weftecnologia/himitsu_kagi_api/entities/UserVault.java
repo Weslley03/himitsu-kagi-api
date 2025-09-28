@@ -22,4 +22,9 @@ public class UserVault {
   // String serviceName, String iv, String passwordEncrypted,
   // LocalDate createdAt, LocalDate updatedAt
   private List<VaultItem> vaultItem;
+
+  public UserVault(String userId, List<VaultItem> vaultItem) {
+    this.userId = userId;
+    this.vaultItem = vaultItem;
+  }
 }
