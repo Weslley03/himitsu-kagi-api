@@ -30,6 +30,12 @@ public class EnvVariables {
     return validadeStringEnv(env, envName);
   }
 
+  public static String getCorsAllowedOrigin() {
+    String envName = "CORS_ALLOWED_ORIGIN";
+    String env = dotenv.get(envName);
+    return validadeStringEnv(env, envName);
+  }
+
   // -----password managers envs----
 
   public static String getDefaultKdf() {
