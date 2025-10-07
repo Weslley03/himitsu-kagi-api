@@ -8,6 +8,7 @@ import com.weftecnologia.himitsu_kagi_api.dtos.auth.ResponseAuthDTO;
 import com.weftecnologia.himitsu_kagi_api.dtos.user.UserDTO;
 import com.weftecnologia.himitsu_kagi_api.entities.User;
 import com.weftecnologia.himitsu_kagi_api.entities.UserConfig;
+import com.weftecnologia.himitsu_kagi_api.exceptions.customExceptions.CheckingPasswordException;
 import com.weftecnologia.himitsu_kagi_api.exceptions.customExceptions.GenericNotFoundException;
 import com.weftecnologia.himitsu_kagi_api.repositories.UserConfigRepository;
 import com.weftecnologia.himitsu_kagi_api.repositories.UserRepository;
@@ -45,7 +46,7 @@ public class AuthUserService {
         userConfig.getIterations());
 
     if (correctPassword == false) {
-      return new ResponseAuthDTO(HttpStatus.BAD_REQUEST.value(), "invalid password.");
+      throw new CheckingPasswordException("invalid password.");
     }
 
     String token = JwtUtils.generateToken(user.getId(), user.getEmail());
