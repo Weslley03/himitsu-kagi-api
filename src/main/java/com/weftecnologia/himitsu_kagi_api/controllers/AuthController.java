@@ -22,7 +22,7 @@ public class AuthController {
   }
 
   @PostMapping
-  public ResponseAuthDTO registerUser(@Valid @RequestBody AuthDTO dto) {
+  public ResponseAuthDTO authUser(@Valid @RequestBody AuthDTO dto) {
     return authUserService.authenticateUser(dto);
   }
 }
