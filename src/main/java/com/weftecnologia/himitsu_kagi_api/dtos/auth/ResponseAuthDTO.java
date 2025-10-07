@@ -1,5 +1,7 @@
 package com.weftecnologia.himitsu_kagi_api.dtos.auth;
 
+import com.weftecnologia.himitsu_kagi_api.dtos.user.UserDTO;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -8,6 +10,7 @@ import lombok.Getter;
 public class ResponseAuthDTO {
   private int status;
   private String message;
+  private UserDTO user;
   private String token;
 
   public ResponseAuthDTO(int status, String message) {

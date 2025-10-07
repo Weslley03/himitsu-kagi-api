@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.weftecnologia.himitsu_kagi_api.dtos.auth.AuthDTO;
 import com.weftecnologia.himitsu_kagi_api.dtos.auth.ResponseAuthDTO;
+import com.weftecnologia.himitsu_kagi_api.dtos.user.UserDTO;
 import com.weftecnologia.himitsu_kagi_api.entities.User;
 import com.weftecnologia.himitsu_kagi_api.entities.UserConfig;
 import com.weftecnologia.himitsu_kagi_api.exceptions.customExceptions.GenericNotFoundException;
@@ -48,6 +49,7 @@ public class AuthUserService {
     }
 
     String token = JwtUtils.generateToken(user.getId(), user.getEmail());
-    return new ResponseAuthDTO(HttpStatus.OK.value(), "user authenticated!", token);
+    UserDTO userDTO = new UserDTO(user);
+    return new ResponseAuthDTO(HttpStatus.OK.value(), "user authenticated!", userDTO, token);
   }
 }
