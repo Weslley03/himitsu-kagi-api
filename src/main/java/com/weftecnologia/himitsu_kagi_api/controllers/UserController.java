@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.weftecnologia.himitsu_kagi_api.dtos.api.ResponseApiDTO;
 import com.weftecnologia.himitsu_kagi_api.dtos.user.RegisterUserDTO;
 import com.weftecnologia.himitsu_kagi_api.dtos.user.UserDTO;
+import com.weftecnologia.himitsu_kagi_api.dtos.user.UserMeResponseDTO;
 import com.weftecnologia.himitsu_kagi_api.security.JwtUtils;
 import com.weftecnologia.himitsu_kagi_api.services.UserService;
 
@@ -36,9 +37,9 @@ public class UserController {
   }
 
   @GetMapping("/me")
-  public UserDTO userMe(@RequestHeader(value = "Authorization", required = false) String authHeader) {
+  public UserMeResponseDTO userMe(@RequestHeader(value = "Authorization", required = false) String authHeader) {
     String userId = JwtUtils.JwtValidationMiddleware(authHeader);
-    UserDTO userResponse = userService.getMe(userId);
+    UserMeResponseDTO userResponse = userService.getMe(userId);
     return userResponse;
   }
 }
