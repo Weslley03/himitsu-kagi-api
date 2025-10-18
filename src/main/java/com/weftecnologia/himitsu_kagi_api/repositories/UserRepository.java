@@ -48,4 +48,13 @@ public class UserRepository {
       throw new DatabaseException("could not find the user, try again later.", e);
     }
   }
+
+  public User getUserById(String id) {
+    try {
+      Query findByIdQuery = Query.query(Criteria.where("_id").is(id));
+      return mongoTemplate.findOne(findByIdQuery, User.class);
+    } catch (DataAccessException e) {
+      throw new DatabaseException("could not find the user, try again later.", e);
+    }
+  }
 }

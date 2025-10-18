@@ -64,4 +64,9 @@ public class UserService {
 
     return userDto;
   }
+
+  public UserDTO getMe(String userId) {
+    User user = this.userRepository.getUserById(userId);
+    return new UserDTO(user);
+  }
 }
