@@ -7,8 +7,10 @@ import org.springframework.stereotype.Service;
 import com.weftecnologia.himitsu_kagi_api.dtos.user.InsertUserDTO;
 import com.weftecnologia.himitsu_kagi_api.dtos.user.RegisterUserDTO;
 import com.weftecnologia.himitsu_kagi_api.dtos.user.UserDTO;
+import com.weftecnologia.himitsu_kagi_api.dtos.user.UserMeResponseDTO;
 import com.weftecnologia.himitsu_kagi_api.dtos.userConfig.CreateUserConfigDTO;
 import com.weftecnologia.himitsu_kagi_api.entities.User;
+import com.weftecnologia.himitsu_kagi_api.entities.UserConfig;
 import com.weftecnologia.himitsu_kagi_api.exceptions.customExceptions.UserAlreadyExistsException;
 import com.weftecnologia.himitsu_kagi_api.repositories.UserConfigRepository;
 import com.weftecnologia.himitsu_kagi_api.repositories.UserRepository;
@@ -63,5 +65,14 @@ public class UserService {
     userVaultRepository.createUserVault(userDto.getId());
 
     return userDto;
+  }
+
+  public UserMeResponseDTO getMe(String userId) {
+    User user = this.userRepository.getUserById(userId);
+    UserDTO userDTO = new UserDTO(user);
+
+    UserConfig userConfig = this.userConfigRepository.findByUserId(userId);
+
+    return new UserMeResponseDTO(userDTO, userConfig);
   }
 }
